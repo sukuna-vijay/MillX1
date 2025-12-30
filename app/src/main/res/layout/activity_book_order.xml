@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FA"
+    android:fitsSystemWindows="true"
+    tools:context=".BookOrderActivity">
+
+    <!-- Green Header Area -->
+    <View
+        android:id="@+id/header_bg"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="#8BA17D"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btn_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        app:cardBackgroundColor="#33FFFFFF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:src="@android:drawable/ic_menu_revert"
+            app:tint="@color/white" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="-80dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_bar"
+        app:layout_constraintTop_toBottomOf="@id/header_bg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="24dp">
+
+            <!-- Item 1: Karuka Bran -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_karuka_bran"
+                        app:shapeAppearanceOverlay="@style/RoundedImage" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Karuka Bran"
+                            android:textColor="#1A1C1E"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Premium Quality Feed"
+                            android:textColor="#74777F"
+                            android:textSize="13sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="QUANTITY"
+                                android:textColor="#8E9199"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.1"/>
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                app:cardBackgroundColor="#F1F3F9"
+                                app:cardCornerRadius="12dp"
+                                app:cardElevation="0dp">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:paddingHorizontal="4dp">
+                                    <ImageView
+                                        android:id="@+id/btn_minus_1"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
+                                        android:background="@color/white"
+                                        android:padding="8dp"
+                                        android:src="@drawable/ic_minus"
+                                        app:tint="#4F7E1C" />
+                                    <TextView
+                                        android:id="@+id/tv_quantity_1"
+                                        android:layout_width="40dp"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="1"
+                                        android:textColor="#1A1C1E"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+                                    <ImageView
+                                        android:id="@+id/btn_plus_1"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
+                                        android:background="#4F7E1C"
+                                        android:padding="8dp"
+                                        android:src="@android:drawable/ic_input_add"
+                                        app:tint="@color/white" />
+                                </LinearLayout>
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Item 2: Satha Bran -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_satha_bran"
+                        app:shapeAppearanceOverlay="@style/RoundedImage" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Satha Bran"
+                            android:textColor="#1A1C1E"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Standard Mix"
+                            android:textColor="#74777F"
+                            android:textSize="13sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="QUANTITY"
+                                android:textColor="#8E9199"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.1"/>
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                app:cardBackgroundColor="#F1F3F9"
+                                app:cardCornerRadius="12dp"
+                                app:cardElevation="0dp">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:paddingHorizontal="4dp">
+                                    <ImageView
+                                        android:id="@+id/btn_minus_2"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
+                                        android:background="@color/white"
+                                        android:padding="8dp"
+                                        android:src="@drawable/ic_minus"
+                                        app:tint="#4F7E1C" />
+                                    <TextView
+                                        android:id="@+id/tv_quantity_2"
+                                        android:layout_width="40dp"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textColor="#1A1C1E"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+                                    <ImageView
+                                        android:id="@+id/btn_plus_2"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
+                                        android:background="#4F7E1C"
+                                        android:padding="8dp"
+                                        android:src="@android:drawable/ic_input_add"
+                                        app:tint="@color/white" />
+                                </LinearLayout>
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Item 3: Thevanam -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_krishi_thevanam"
+                        app:shapeAppearanceOverlay="@style/RoundedImage" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thevanam"
+                            android:textColor="#1A1C1E"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cattle Feed Pro+"
+                            android:textColor="#74777F"
+                            android:textSize="13sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="QUANTITY"
+                                android:textColor="#8E9199"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.1"/>
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                app:cardBackgroundColor="#F1F3F9"
+                                app:cardCornerRadius="12dp"
+                                app:cardElevation="0dp">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:paddingHorizontal="4dp">
+                                    <ImageView
+                                        android:id="@+id/btn_minus_3"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
+                                        android:background="@color/white"
+                                        android:padding="8dp"
+                                        android:src="@drawable/ic_minus"
+                                        app:tint="#4F7E1C" />
+                                    <TextView
+                                        android:id="@+id/tv_quantity_3"
+                                        android:layout_width="40dp"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="2"
+                                        android:textColor="#1A1C1E"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+                                    <ImageView
+                                        android:id="@+id/btn_plus_3"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
+                                        android:background="#4F7E1C"
+                                        android:padding="8dp"
+                                        android:src="@android:drawable/ic_input_add"
+                                        app:tint="@color/white" />
+                                </LinearLayout>
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Item 4: Peanut Oil Cake -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_peanut_oilcake"
+                        app:shapeAppearanceOverlay="@style/RoundedImage" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Peanut Oil Cake"
+                            android:textColor="#1A1C1E"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Organic Residue"
+                            android:textColor="#74777F"
+                            android:textSize="13sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="QUANTITY"
+                                android:textColor="#8E9199"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.1"/>
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                app:cardBackgroundColor="#F1F3F9"
+                                app:cardCornerRadius="12dp"
+                                app:cardElevation="0dp">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:paddingHorizontal="4dp">
+                                    <ImageView
+                                        android:id="@+id/btn_minus_4"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
+                                        android:background="@color/white"
+                                        android:padding="8dp"
+                                        android:src="@drawable/ic_minus"
+                                        app:tint="#4F7E1C" />
+                                    <TextView
+                                        android:id="@+id/tv_quantity_4"
+                                        android:layout_width="40dp"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textColor="#1A1C1E"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+                                    <ImageView
+                                        android:id="@+id/btn_plus_4"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
+                                        android:background="#4F7E1C"
+                                        android:padding="8dp"
+                                        android:src="@android:drawable/ic_input_add"
+                                        app:tint="@color/white" />
+                                </LinearLayout>
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Bar with Book Now button -->
+    <RelativeLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:paddingHorizontal="24dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_book_now"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:backgroundTint="#4F7E1C"
+            android:text="Book Now"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cornerRadius="16dp"
+            app:icon="@android:drawable/checkbox_on_background"
+            app:iconGravity="textEnd" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
