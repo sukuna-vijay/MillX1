@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA"
     android:fitsSystemWindows="true"
-    tools:context=".MachineStatusActivity">
+    tools:context=".AdminMachineManagementActivity">
 
     <!-- Header -->
     <RelativeLayout
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Machine Status"
+            android:text="Machine Management"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Machine Status"
+                    android:text="All Machines"
                     android:textColor="#1A1C1E"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -145,12 +145,12 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/img1"
                         android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/arrow1"
+                        android:layout_toStartOf="@id/btn_edit1"
                         android:orientation="vertical">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Idly Batter Machine"
+                            android:text="Idly Batter Mac..."
                             android:textColor="#1A1C1E"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -180,14 +180,22 @@
                             android:progress="70"
                             android:progressTint="#4F7E1C" />
                     </LinearLayout>
-                    <ImageView
-                        android:id="@+id/arrow1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_edit1"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:src="@android:drawable/ic_media_play"
-                        app:tint="#CBD5E0" />
+                        android:backgroundTint="#F1F3F4"
+                        android:text="Edit"
+                        android:textAllCaps="false"
+                        android:textColor="#4A5568"
+                        android:textSize="12sp"
+                        app:cornerRadius="8dp"
+                        app:icon="@android:drawable/ic_menu_edit"
+                        app:iconSize="14dp"
+                        app:iconTint="#4A5568" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -228,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/img2"
                         android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/arrow2"
+                        android:layout_toStartOf="@id/btn_edit2"
                         android:orientation="vertical">
                         <TextView
                             android:layout_width="wrap_content"
@@ -263,14 +271,22 @@
                             android:progress="40"
                             android:progressTint="#4F7E1C" />
                     </LinearLayout>
-                    <ImageView
-                        android:id="@+id/arrow2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_edit2"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:src="@android:drawable/ic_media_play"
-                        app:tint="#CBD5E0" />
+                        android:backgroundTint="#F1F3F4"
+                        android:text="Edit"
+                        android:textAllCaps="false"
+                        android:textColor="#4A5568"
+                        android:textSize="12sp"
+                        app:cornerRadius="8dp"
+                        app:icon="@android:drawable/ic_menu_edit"
+                        app:iconSize="14dp"
+                        app:iconTint="#4A5568" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -311,12 +327,12 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/img3"
                         android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/arrow3"
+                        android:layout_toStartOf="@id/btn_edit3"
                         android:orientation="vertical">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Chilli Powder Machine"
+                            android:text="Chilli Powder ..."
                             android:textColor="#1A1C1E"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -346,14 +362,22 @@
                             android:progress="60"
                             android:progressTint="#4F7E1C" />
                     </LinearLayout>
-                    <ImageView
-                        android:id="@+id/arrow3"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_edit3"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:src="@android:drawable/ic_media_play"
-                        app:tint="#CBD5E0" />
+                        android:backgroundTint="#F1F3F4"
+                        android:text="Edit"
+                        android:textAllCaps="false"
+                        android:textColor="#4A5568"
+                        android:textSize="12sp"
+                        app:cornerRadius="8dp"
+                        app:icon="@android:drawable/ic_menu_edit"
+                        app:iconSize="14dp"
+                        app:iconTint="#4A5568" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -394,12 +418,12 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/img4"
                         android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/arrow4"
+                        android:layout_toStartOf="@id/btn_edit4"
                         android:orientation="vertical">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rice Making Machine"
+                            android:text="Rice Making M..."
                             android:textColor="#1A1C1E"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -429,14 +453,22 @@
                             android:progress="85"
                             android:progressTint="#4F7E1C" />
                     </LinearLayout>
-                    <ImageView
-                        android:id="@+id/arrow4"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_edit4"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:src="@android:drawable/ic_media_play"
-                        app:tint="#CBD5E0" />
+                        android:backgroundTint="#F1F3F4"
+                        android:text="Edit"
+                        android:textAllCaps="false"
+                        android:textColor="#4A5568"
+                        android:textSize="12sp"
+                        app:cornerRadius="8dp"
+                        app:icon="@android:drawable/ic_menu_edit"
+                        app:iconSize="14dp"
+                        app:iconTint="#4A5568" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -477,7 +509,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/img5"
                         android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/lock5"
+                        android:layout_toStartOf="@id/btn_edit5"
                         android:alpha="0.5"
                         android:orientation="vertical">
                         <TextView
@@ -513,14 +545,22 @@
                             android:progress="0"
                             android:progressTint="#CBD5E0" />
                     </LinearLayout>
-                    <ImageView
-                        android:id="@+id/lock5"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_edit5"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:src="@android:drawable/ic_lock_lock"
-                        app:tint="#CBD5E0" />
+                        android:backgroundTint="#F1F3F4"
+                        android:text="Edit"
+                        android:textAllCaps="false"
+                        android:textColor="#4A5568"
+                        android:textSize="12sp"
+                        app:cornerRadius="8dp"
+                        app:icon="@android:drawable/ic_menu_edit"
+                        app:iconSize="14dp"
+                        app:iconTint="#4A5568" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -529,7 +569,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="80dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="1dp"
                 app:strokeWidth="0dp">
@@ -562,12 +602,12 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/img6"
                         android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/arrow6"
+                        android:layout_toStartOf="@id/btn_edit6"
                         android:orientation="vertical">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Karuka Grains Machine"
+                            android:text="Karuka Grains ..."
                             android:textColor="#1A1C1E"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -597,18 +637,38 @@
                             android:progress="30"
                             android:progressTint="#4F7E1C" />
                     </LinearLayout>
-                    <ImageView
-                        android:id="@+id/arrow6"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_edit6"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:src="@android:drawable/ic_media_play"
-                        app:tint="#CBD5E0" />
+                        android:backgroundTint="#F1F3F4"
+                        android:text="Edit"
+                        android:textAllCaps="false"
+                        android:textColor="#4A5568"
+                        android:textSize="12sp"
+                        app:cornerRadius="8dp"
+                        app:icon="@android:drawable/ic_menu_edit"
+                        app:iconSize="14dp"
+                        app:iconTint="#4A5568" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </ScrollView>
+
+    <!-- FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_machine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:backgroundTint="#4F7E1C"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

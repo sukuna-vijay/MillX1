@@ -49,7 +49,8 @@ public class AdminMainActivity extends AppCompatActivity {
             btnMachineDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(AdminMainActivity.this, MachineStatusActivity.class);
+                    // Navigate to the new Admin Machine Management screen
+                    Intent intent = new Intent(AdminMainActivity.this, AdminMachineManagementActivity.class);
                     startActivity(intent);
                 }
             });
@@ -60,7 +61,8 @@ public class AdminMainActivity extends AppCompatActivity {
             btnPricesDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(AdminMainActivity.this, CurrentPricesActivity.class);
+                    // Navigate to the new Admin Price Management screen
+                    Intent intent = new Intent(AdminMainActivity.this, AdminPriceManagementActivity.class);
                     startActivity(intent);
                 }
             });
@@ -71,7 +73,8 @@ public class AdminMainActivity extends AppCompatActivity {
             btnStockDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(AdminMainActivity.this, StockAvailableActivity.class);
+                    // Navigate to the new Admin Stock Management screen
+                    Intent intent = new Intent(AdminMainActivity.this, AdminStockManagementActivity.class);
                     startActivity(intent);
                 }
             });

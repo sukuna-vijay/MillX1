@@ -7,6 +7,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -17,13 +20,13 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.IOException;
 
-public class ProfileActivity extends AppCompatActivity {
+public class AddNewProductActivity extends AppCompatActivity {
 
-    private ShapeableImageView profileImg;
+    private ImageView imgPreview;
+    private LinearLayout uploadPlaceholder;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String[]> permissionLauncher;
@@ -31,24 +34,27 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_add_new_product);
 
-        profileImg = findViewById(R.id.profile_img);
-        MaterialCardView btnChangePic = findViewById(R.id.btn_change_profile_pic);
-        MaterialButton btnSubmit = findViewById(R.id.btn_submit);
+        imgPreview = findViewById(R.id.img_product_preview);
+        uploadPlaceholder = findViewById(R.id.upload_placeholder);
+        MaterialCardView btnUpload = findViewById(R.id.btn_upload_image);
+        ImageView btnBack = findViewById(R.id.btn_back);
+        MaterialButton btnAddProduct = findViewById(R.id.btn_add_product);
 
         setupLaunchers();
 
-        if (btnChangePic != null) {
-            btnChangePic.setOnClickListener(v -> showImageSourceDialog());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
         }
 
-        if (btnSubmit != null) {
-            btnSubmit.setOnClickListener(v -> {
-                Toast.makeText(ProfileActivity.this, "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+        if (btnUpload != null) {
+            btnUpload.setOnClickListener(v -> showImageSourceDialog());
+        }
+
+        if (btnAddProduct != null) {
+            btnAddProduct.setOnClickListener(v -> {
+                Toast.makeText(this, "New product added successfully", Toast.LENGTH_SHORT).show();
                 finish();
             });
         }
@@ -61,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Bundle extras = result.getData().getExtras();
                         Bitmap imageBitmap = (Bitmap) extras.get("data");
-                        profileImg.setImageBitmap(imageBitmap);
+                        showImage(imageBitmap);
                     }
                 }
         );
@@ -73,7 +79,7 @@ public class ProfileActivity extends AppCompatActivity {
                         Uri selectedImageUri = result.getData().getData();
                         try {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                            profileImg.setImageBitmap(bitmap);
+                            showImage(bitmap);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -94,16 +100,22 @@ public class ProfileActivity extends AppCompatActivity {
                     if (allGranted) {
                         showImageSourceDialog();
                     } else {
-                        Toast.makeText(this, "Permissions required to change profile picture", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Permissions required to upload product photo", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
     }
 
+    private void showImage(Bitmap bitmap) {
+        imgPreview.setImageBitmap(bitmap);
+        imgPreview.setVisibility(View.VISIBLE);
+        uploadPlaceholder.setVisibility(View.GONE);
+    }
+
     private void showImageSourceDialog() {
         String[] options = {"Camera", "Gallery"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Image Source");
+        builder.setTitle("Select Product Image");
         builder.setItems(options, (dialog, which) -> {
             if (which == 0) {
                 checkCameraPermissionAndOpen();

@@ -40,6 +40,7 @@
             app:strokeWidth="3dp" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btn_change_profile_pic"
             android:layout_width="26dp"
             android:layout_height="26dp"
             app:cardBackgroundColor="#8BC34A"

@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -17,13 +19,12 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.IOException;
 
-public class ProfileActivity extends AppCompatActivity {
+public class EditMachineDetailsActivity extends AppCompatActivity {
 
-    private ShapeableImageView profileImg;
+    private ImageView machineImgPreview;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String[]> permissionLauncher;
@@ -31,24 +32,31 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_edit_machine_details);
 
-        profileImg = findViewById(R.id.profile_img);
-        MaterialCardView btnChangePic = findViewById(R.id.btn_change_profile_pic);
-        MaterialButton btnSubmit = findViewById(R.id.btn_submit);
+        machineImgPreview = findViewById(R.id.machine_img_preview);
+        MaterialCardView btnChangePhoto = findViewById(R.id.btn_change_photo);
+        MaterialButton btnSave = findViewById(R.id.btn_save);
+        ImageView btnBack = findViewById(R.id.btn_back);
+        TextView btnCancel = findViewById(R.id.btn_cancel);
 
         setupLaunchers();
 
-        if (btnChangePic != null) {
-            btnChangePic.setOnClickListener(v -> showImageSourceDialog());
+        if (btnChangePhoto != null) {
+            btnChangePhoto.setOnClickListener(v -> showImageSourceDialog());
         }
 
-        if (btnSubmit != null) {
-            btnSubmit.setOnClickListener(v -> {
-                Toast.makeText(ProfileActivity.this, "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> finish());
+        }
+
+        if (btnSave != null) {
+            btnSave.setOnClickListener(v -> {
+                Toast.makeText(this, "Changes saved successfully", Toast.LENGTH_SHORT).show();
                 finish();
             });
         }
@@ -61,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Bundle extras = result.getData().getExtras();
                         Bitmap imageBitmap = (Bitmap) extras.get("data");
-                        profileImg.setImageBitmap(imageBitmap);
+                        machineImgPreview.setImageBitmap(imageBitmap);
                     }
                 }
         );
@@ -73,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
                         Uri selectedImageUri = result.getData().getData();
                         try {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                            profileImg.setImageBitmap(bitmap);
+                            machineImgPreview.setImageBitmap(bitmap);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -94,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (allGranted) {
                         showImageSourceDialog();
                     } else {
-                        Toast.makeText(this, "Permissions required to change profile picture", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Permissions required to change machine photo", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
