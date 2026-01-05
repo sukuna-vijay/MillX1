@@ -162,6 +162,14 @@
         <activity
             android:name=".ManageCustomerOrdersActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".EditStockItemActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AddStockItemActivity"
+            android:exported="false" />
             
     </application>
 

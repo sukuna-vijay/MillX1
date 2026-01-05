@@ -48,220 +48,283 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Machine Image"
-                android:textColor="#4A5568"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <!-- Image Upload Box -->
+            <!-- Machine Preview -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btn_upload_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="12dp"
-                app:cardBackgroundColor="@color/white"
+                android:layout_height="220dp"
                 app:cardCornerRadius="24dp"
-                app:cardElevation="0dp"
+                app:cardElevation="2dp"
                 app:strokeWidth="0dp">
-
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/dashed_border">
-
+                    android:layout_height="match_parent">
                     <ImageView
                         android:id="@+id/img_machine_preview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:visibility="gone" />
-
+                        android:src="@drawable/ic_flour_machine"
+                        android:visibility="visible" />
+                    
                     <LinearLayout
                         android:id="@+id/upload_placeholder"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@drawable/dashed_border"
+                        android:visibility="gone">
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@android:drawable/ic_menu_camera"
+                            app:tint="#4F7E1C" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Tap to upload photo"
+                            android:textColor="#4A5568" />
+                    </LinearLayout>
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
-                            app:cardBackgroundColor="#F0F4F0"
-                            app:cardCornerRadius="32dp"
-                            app:cardElevation="0dp">
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="16dp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp"
+                        app:strokeWidth="0dp">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="8dp">
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:padding="16dp"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
                                 android:src="@android:drawable/ic_menu_camera"
                                 app:tint="#4F7E1C" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:text="Tap to upload photo"
-                            android:textColor="#4A5568"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Supports JPG, PNG"
-                            android:textColor="#A0AEC0"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="CHANGE"
+                                android:textColor="#4F7E1C"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Inputs -->
-            <TextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Machine Name"
-                android:textColor="#4A5568"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input_field_bg"
-                android:hint="e.g. Rice Grinder Pro"
-                android:paddingHorizontal="16dp"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Machine ID"
-                android:textColor="#4A5568"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input_field_bg"
-                android:paddingHorizontal="16dp">
-                <ImageView
-                    android:id="@+id/ic_qr"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:src="@android:drawable/ic_menu_sort_by_size"
-                    app:tint="#A0AEC0" />
-                <EditText
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
-                    android:layout_toEndOf="@id/ic_qr"
-                    android:background="@null"
-                    android:hint="e.g. M-001-RG"
-                    android:textSize="15sp" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Production Capacity"
-                android:textColor="#4A5568"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input_field_bg"
-                android:paddingHorizontal="16dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:hint="e.g. 50"
-                    android:textSize="15sp" />
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="#F1F3F4"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="4dp"
-                    android:text="kg/hour"
-                    android:textColor="#718096"
-                    android:textSize="12sp" />
-            </RelativeLayout>
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Current Status"
-                android:textColor="#4A5568"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MACHINE NAME"
+                        android:textColor="#A0AEC0"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/input_field_bg"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="16dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/ic_menu_edit"
+                            app:tint="#A0AEC0" />
+                        <EditText
+                            android:id="@+id/edit_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="12dp"
+                            android:background="@null"
+                            android:hint="e.g. Rice Grinder Pro"
+                            android:textColor="#1A1C1E"
+                            android:textSize="15sp" />
+                    </LinearLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_available"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:text="Available"
-                    android:textAllCaps="false"
-                    android:textColor="#4F7E1C"
-                    app:cornerRadius="16dp"
-                    app:strokeColor="#4F7E1C" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="MACHINE ID"
+                        android:textColor="#A0AEC0"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_not_available"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_weight="1"
-                    android:text="Not Available"
-                    android:textAllCaps="false"
-                    android:textColor="#E53E3E"
-                    app:cornerRadius="16dp"
-                    app:strokeColor="#E2E8F0" />
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/input_field_bg"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="16dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/ic_menu_sort_by_size"
+                            app:tint="#A0AEC0" />
+                        <EditText
+                            android:id="@+id/edit_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="12dp"
+                            android:background="@null"
+                            android:hint="e.g. MCH-1024-IB"
+                            android:textColor="#1A1C1E"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="CURRENT STATUS"
+                        android:textColor="#A0AEC0"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"/>
+
+                    <RelativeLayout
+                        android:id="@+id/btn_status_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/input_field_bg"
+                        android:paddingHorizontal="16dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <View
+                            android:id="@+id/status_dot"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/circle_green" />
+                        <TextView
+                            android:id="@+id/tv_current_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_toEndOf="@id/status_dot"
+                            android:text="Available"
+                            android:textColor="#1A1C1E"
+                            android:textSize="15sp" />
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@android:drawable/arrow_down_float"
+                            app:tint="#A0AEC0" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="PRODUCTION CAPACITY"
+                        android:textColor="#A0AEC0"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/input_field_bg"
+                        android:paddingHorizontal="16dp">
+                        <ImageView
+                            android:id="@+id/ic_cap"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:src="@android:drawable/ic_menu_recent_history"
+                            app:tint="#A0AEC0" />
+                        <EditText
+                            android:id="@+id/edit_capacity"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="12dp"
+                            android:layout_toStartOf="@id/txt_unit"
+                            android:layout_toEndOf="@id/ic_cap"
+                            android:background="@null"
+                            android:hint="e.g. 5-10"
+                            android:textColor="#1A1C1E"
+                            android:textSize="15sp" />
+                        <TextView
+                            android:id="@+id/txt_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:text="KG/HR"
+                            android:textColor="#A0AEC0"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add_machine"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:layout_margin="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#4F7E1C"
-        android:text="+ Add Machine"
+        android:text="Add Machine"
         android:textAllCaps="false"
         android:textSize="18sp"
         android:textStyle="bold"
         app:cornerRadius="16dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:icon="@android:drawable/ic_menu_save"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toTopOf="@id/btn_cancel" />
+
+    <TextView
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:padding="8dp"
+        android:text="Cancel"
+        android:textColor="#718096"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,12 +24,11 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.io.IOException;
 
-public class AddNewMachineActivity extends AppCompatActivity {
+public class AddStockItemActivity extends AppCompatActivity {
 
     private ImageView imgPreview;
     private LinearLayout uploadPlaceholder;
-    private TextView tvCurrentStatus;
-    private View statusDot;
+    private TextView tvUnit;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String[]> permissionLauncher;
@@ -37,17 +36,16 @@ public class AddNewMachineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_machine);
+        setContentView(R.layout.activity_add_stock_item);
 
-        imgPreview = findViewById(R.id.img_machine_preview);
+        imgPreview = findViewById(R.id.img_stock_preview);
         uploadPlaceholder = findViewById(R.id.upload_placeholder);
-        tvCurrentStatus = findViewById(R.id.tv_current_status);
-        statusDot = findViewById(R.id.status_dot);
+        tvUnit = findViewById(R.id.tv_unit);
         
         MaterialCardView btnUpload = findViewById(R.id.btn_upload_image);
-        View btnStatusDropdown = findViewById(R.id.btn_status_dropdown);
-        ImageView btnBack = findViewById(R.id.btn_back);
-        MaterialButton btnAddMachine = findViewById(R.id.btn_add_machine);
+        View btnUnitDropdown = findViewById(R.id.btn_unit_dropdown);
+        View btnBack = findViewById(R.id.btn_back);
+        MaterialButton btnAddStock = findViewById(R.id.btn_add_stock);
 
         setupLaunchers();
 
@@ -59,30 +57,24 @@ public class AddNewMachineActivity extends AppCompatActivity {
             btnUpload.setOnClickListener(v -> showImageSourceDialog());
         }
 
-        if (btnStatusDropdown != null) {
-            btnStatusDropdown.setOnClickListener(v -> showStatusSelectionDialog());
+        if (btnUnitDropdown != null) {
+            btnUnitDropdown.setOnClickListener(v -> showUnitSelectionDialog());
         }
 
-        if (btnAddMachine != null) {
-            btnAddMachine.setOnClickListener(v -> {
-                Toast.makeText(this, "New machine added successfully", Toast.LENGTH_SHORT).show();
+        if (btnAddStock != null) {
+            btnAddStock.setOnClickListener(v -> {
+                Toast.makeText(this, "Stock Item Added Successfully", Toast.LENGTH_SHORT).show();
                 finish();
             });
         }
     }
 
-    private void showStatusSelectionDialog() {
-        String[] options = {"Available", "Not Available"};
+    private void showUnitSelectionDialog() {
+        String[] units = {"Kg", "Bags"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Machine Status");
-        builder.setItems(options, (dialog, which) -> {
-            if (which == 0) {
-                tvCurrentStatus.setText("Available");
-                statusDot.setBackgroundResource(R.drawable.circle_green);
-            } else {
-                tvCurrentStatus.setText("Not Available");
-                statusDot.setBackgroundResource(R.drawable.circle_red);
-            }
+        builder.setTitle("Select Unit");
+        builder.setItems(units, (dialog, which) -> {
+            tvUnit.setText(units[which]);
         });
         builder.show();
     }
@@ -127,7 +119,7 @@ public class AddNewMachineActivity extends AppCompatActivity {
                     if (allGranted) {
                         showImageSourceDialog();
                     } else {
-                        Toast.makeText(this, "Permissions required to upload machine photo", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Permissions required to upload stock photo", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -142,7 +134,7 @@ public class AddNewMachineActivity extends AppCompatActivity {
     private void showImageSourceDialog() {
         String[] options = {"Camera", "Gallery"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Machine Image");
+        builder.setTitle("Select Image Source");
         builder.setItems(options, (dialog, which) -> {
             if (which == 0) {
                 checkCameraPermissionAndOpen();

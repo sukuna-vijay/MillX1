@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ import java.io.IOException;
 public class EditMachineDetailsActivity extends AppCompatActivity {
 
     private ImageView machineImgPreview;
+    private TextView tvCurrentStatus;
+    private View statusDot;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String[]> permissionLauncher;
@@ -35,7 +38,11 @@ public class EditMachineDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_machine_details);
 
         machineImgPreview = findViewById(R.id.machine_img_preview);
+        tvCurrentStatus = findViewById(R.id.tv_current_status);
+        statusDot = findViewById(R.id.status_dot);
+        
         MaterialCardView btnChangePhoto = findViewById(R.id.btn_change_photo);
+        View btnStatusDropdown = findViewById(R.id.btn_status_dropdown);
         MaterialButton btnSave = findViewById(R.id.btn_save);
         ImageView btnBack = findViewById(R.id.btn_back);
         TextView btnCancel = findViewById(R.id.btn_cancel);
@@ -44,6 +51,10 @@ public class EditMachineDetailsActivity extends AppCompatActivity {
 
         if (btnChangePhoto != null) {
             btnChangePhoto.setOnClickListener(v -> showImageSourceDialog());
+        }
+
+        if (btnStatusDropdown != null) {
+            btnStatusDropdown.setOnClickListener(v -> showStatusSelectionDialog());
         }
 
         if (btnBack != null) {
@@ -60,6 +71,22 @@ public class EditMachineDetailsActivity extends AppCompatActivity {
                 finish();
             });
         }
+    }
+
+    private void showStatusSelectionDialog() {
+        String[] options = {"Available", "Not Available"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Machine Status");
+        builder.setItems(options, (dialog, which) -> {
+            if (which == 0) {
+                tvCurrentStatus.setText("Available");
+                statusDot.setBackgroundResource(R.drawable.circle_green);
+            } else {
+                tvCurrentStatus.setText("Not Available");
+                statusDot.setBackgroundResource(R.drawable.circle_red);
+            }
+        });
+        builder.show();
     }
 
     private void setupLaunchers() {

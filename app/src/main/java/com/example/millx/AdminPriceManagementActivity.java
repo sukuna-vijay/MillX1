@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AdminPriceManagementActivity extends AppCompatActivity {
@@ -25,6 +26,25 @@ public class AdminPriceManagementActivity extends AppCompatActivity {
                 Intent intent = new Intent(AdminPriceManagementActivity.this, AddNewProductActivity.class);
                 startActivity(intent);
             });
+        }
+
+        setupEditButtons();
+    }
+
+    private void setupEditButtons() {
+        int[] editButtonIds = {
+                R.id.btn_edit1, R.id.btn_edit2, R.id.btn_edit3,
+                R.id.btn_edit4, R.id.btn_edit5, R.id.btn_edit6
+        };
+
+        for (int id : editButtonIds) {
+            View btnEdit = findViewById(id);
+            if (btnEdit != null) {
+                btnEdit.setOnClickListener(v -> {
+                    Intent intent = new Intent(AdminPriceManagementActivity.this, EditProductActivity.class);
+                    startActivity(intent);
+                });
+            }
         }
     }
 }

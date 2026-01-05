@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +23,10 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.io.IOException;
 
-public class AddNewMachineActivity extends AppCompatActivity {
+public class EditStockItemActivity extends AppCompatActivity {
 
     private ImageView imgPreview;
-    private LinearLayout uploadPlaceholder;
-    private TextView tvCurrentStatus;
-    private View statusDot;
+    private TextView tvUnit;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String[]> permissionLauncher;
@@ -37,17 +34,16 @@ public class AddNewMachineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_machine);
+        setContentView(R.layout.activity_edit_stock_item);
 
-        imgPreview = findViewById(R.id.img_machine_preview);
-        uploadPlaceholder = findViewById(R.id.upload_placeholder);
-        tvCurrentStatus = findViewById(R.id.tv_current_status);
-        statusDot = findViewById(R.id.status_dot);
+        imgPreview = findViewById(R.id.img_stock_preview);
+        tvUnit = findViewById(R.id.tv_unit);
+        MaterialCardView btnEditImage = findViewById(R.id.btn_edit_image);
+        View btnBack = findViewById(R.id.btn_back);
+        MaterialButton btnSave = findViewById(R.id.btn_save);
         
-        MaterialCardView btnUpload = findViewById(R.id.btn_upload_image);
-        View btnStatusDropdown = findViewById(R.id.btn_status_dropdown);
-        ImageView btnBack = findViewById(R.id.btn_back);
-        MaterialButton btnAddMachine = findViewById(R.id.btn_add_machine);
+        // Find the unit dropdown container (RelativeLayout containing tv_unit)
+        View unitDropdown = (View) tvUnit.getParent();
 
         setupLaunchers();
 
@@ -55,34 +51,28 @@ public class AddNewMachineActivity extends AppCompatActivity {
             btnBack.setOnClickListener(v -> finish());
         }
 
-        if (btnUpload != null) {
-            btnUpload.setOnClickListener(v -> showImageSourceDialog());
+        if (btnEditImage != null) {
+            btnEditImage.setOnClickListener(v -> showImageSourceDialog());
         }
 
-        if (btnStatusDropdown != null) {
-            btnStatusDropdown.setOnClickListener(v -> showStatusSelectionDialog());
+        if (unitDropdown != null) {
+            unitDropdown.setOnClickListener(v -> showUnitSelectionDialog());
         }
 
-        if (btnAddMachine != null) {
-            btnAddMachine.setOnClickListener(v -> {
-                Toast.makeText(this, "New machine added successfully", Toast.LENGTH_SHORT).show();
+        if (btnSave != null) {
+            btnSave.setOnClickListener(v -> {
+                Toast.makeText(this, "Stock Changes Saved", Toast.LENGTH_SHORT).show();
                 finish();
             });
         }
     }
 
-    private void showStatusSelectionDialog() {
-        String[] options = {"Available", "Not Available"};
+    private void showUnitSelectionDialog() {
+        String[] units = {"Bags", "KG"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Machine Status");
-        builder.setItems(options, (dialog, which) -> {
-            if (which == 0) {
-                tvCurrentStatus.setText("Available");
-                statusDot.setBackgroundResource(R.drawable.circle_green);
-            } else {
-                tvCurrentStatus.setText("Not Available");
-                statusDot.setBackgroundResource(R.drawable.circle_red);
-            }
+        builder.setTitle("Select Unit of Measure");
+        builder.setItems(units, (dialog, which) -> {
+            tvUnit.setText(units[which]);
         });
         builder.show();
     }
@@ -94,7 +84,7 @@ public class AddNewMachineActivity extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Bundle extras = result.getData().getExtras();
                         Bitmap imageBitmap = (Bitmap) extras.get("data");
-                        showImage(imageBitmap);
+                        imgPreview.setImageBitmap(imageBitmap);
                     }
                 }
         );
@@ -106,7 +96,7 @@ public class AddNewMachineActivity extends AppCompatActivity {
                         Uri selectedImageUri = result.getData().getData();
                         try {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                            showImage(bitmap);
+                            imgPreview.setImageBitmap(bitmap);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -127,22 +117,16 @@ public class AddNewMachineActivity extends AppCompatActivity {
                     if (allGranted) {
                         showImageSourceDialog();
                     } else {
-                        Toast.makeText(this, "Permissions required to upload machine photo", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Permissions required to change product image", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
     }
 
-    private void showImage(Bitmap bitmap) {
-        imgPreview.setImageBitmap(bitmap);
-        imgPreview.setVisibility(View.VISIBLE);
-        uploadPlaceholder.setVisibility(View.GONE);
-    }
-
     private void showImageSourceDialog() {
         String[] options = {"Camera", "Gallery"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Machine Image");
+        builder.setTitle("Select Image Source");
         builder.setItems(options, (dialog, which) -> {
             if (which == 0) {
                 checkCameraPermissionAndOpen();
