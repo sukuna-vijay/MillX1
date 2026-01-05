@@ -41,8 +41,11 @@
             app:strokeWidth="2dp" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btn_change_profile_pic"
             android:layout_width="28dp"
             android:layout_height="28dp"
+            android:clickable="true"
+            android:focusable="true"
             app:cardBackgroundColor="#7BA65D"
             app:cardCornerRadius="14dp"
             app:cardElevation="2dp"
