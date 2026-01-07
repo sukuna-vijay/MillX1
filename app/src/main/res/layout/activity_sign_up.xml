@@ -102,6 +102,26 @@
             app:boxBackgroundColor="#FAFAFA"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_phone"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:paddingStart="20dp"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:boxBackgroundColor="#FAFAFA"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
             app:passwordToggleEnabled="true">
 

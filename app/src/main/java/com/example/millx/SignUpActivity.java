@@ -14,7 +14,7 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    TextInputEditText etName, etEmail, etPassword, etConfirmPassword;
+    TextInputEditText etName, etEmail, etPhone, etPassword, etConfirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         etName = findViewById(R.id.edit_name);
         etEmail = findViewById(R.id.edit_email);
+        etPhone = findViewById(R.id.edit_phone);
         etPassword = findViewById(R.id.edit_password);
         etConfirmPassword = findViewById(R.id.edit_confirm_password);
 
@@ -34,10 +35,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
+        String phone = etPhone.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirm = etConfirmPassword.getText().toString().trim();
 
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
             Toast.makeText(this, "All fields required", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -49,9 +51,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
 
-        // ✅ SEND JSON (THIS FIXES INVALID JSON FORMAT)
-        SignupRequest request =
-                new SignupRequest(name, email, password);
+        // ✅ SEND JSON (Passing 4 arguments: name, email, phone, password)
+        SignupRequest request = new SignupRequest(name, email, phone, password);
 
         apiService.signup(request).enqueue(new Callback<ApiResponse>() {
             @Override
