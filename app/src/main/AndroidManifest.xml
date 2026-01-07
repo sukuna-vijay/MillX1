@@ -24,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MillX"
         android:usesCleartextTraffic="true">
-        
+
+        <activity android:name=".HomeActivity" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"

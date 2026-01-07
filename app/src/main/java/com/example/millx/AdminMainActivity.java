@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.card.MaterialCardView;
 
@@ -123,23 +124,26 @@ public class AdminMainActivity extends AppCompatActivity {
                 }
             });
         }
-    }
 
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            finishAffinity(); // Close the app
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+        // Handle back press using the modern API (replacing deprecated onBackPressed)
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
+            public void handleOnBackPressed() {
+                if (doubleBackToExitPressedOnce) {
+                    finishAffinity(); // Close the app
+                    return;
+                }
+
+                doubleBackToExitPressedOnce = true;
+                Toast.makeText(AdminMainActivity.this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        doubleBackToExitPressedOnce = false;
+                    }
+                }, 2000);
             }
-        }, 2000);
+        });
     }
 }

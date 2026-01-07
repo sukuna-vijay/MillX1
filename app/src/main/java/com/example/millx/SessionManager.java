@@ -25,7 +25,13 @@ public class SessionManager {
         editor.putInt(KEY_ID, id);
         editor.putString(KEY_NAME, name);
         editor.putString(KEY_ROLE, role);
-        editor.commit();
+        editor.apply();
+    }
+
+    public void setLogin(boolean isLoggedIn, String role) {
+        editor.putBoolean(KEY_IS_LOGGED_IN, isLoggedIn);
+        editor.putString(KEY_ROLE, role);
+        editor.apply();
     }
 
     public boolean isLoggedIn() {
@@ -38,6 +44,6 @@ public class SessionManager {
 
     public void logoutUser() {
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 }
