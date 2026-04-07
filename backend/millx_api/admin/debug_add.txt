@@ -1,0 +1,13 @@
+POST: Array
+(
+    [name] => Idly batter machine
+    [status] => active
+    [min] => 20
+    [max] => 1
+    [unit] => KG/HR
+    [description] => 1
+)
+
+FILES: Array
+(
+)

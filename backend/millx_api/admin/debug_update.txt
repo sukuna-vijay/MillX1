@@ -1,0 +1,10 @@
+Array
+(
+    [description] => 3
+    [id] => 8
+    [max] => 0
+    [min] => 0
+    [name] => Karuka grain machine
+    [status] => Running
+    [unit] => KG/HR
+)

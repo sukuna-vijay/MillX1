@@ -1,0 +1,7 @@
+product_id
+product_name
+description
+price
+unit
+image
+created_at
