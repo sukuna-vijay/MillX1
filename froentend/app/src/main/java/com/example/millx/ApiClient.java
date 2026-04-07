@@ -7,7 +7,7 @@ public class ApiClient {
     // For Android Emulator use "http://10.0.2.2/millx_api/hellojkjjljjj"
     // For Real Device (Same Wi-Fi) use "http://192.168.x.x/millx_api/" (Your PC's
     // IP)
-    // "https://l2fss106-80.inc1.devtunnels.ms/millx_api/dvxdvxdvxdvz";
+    // "https://l2fss106-80.inc1.devtunnels.ms/millx_api/dvxdvxdvxdvz"hjh;
     //34567
     public static final String BASE_URL = "http://10.0.2.2/millx_api/";
     private static Retrofit retrofit = null;
