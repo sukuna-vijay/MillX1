@@ -50,7 +50,6 @@ public class EditMachineDetailsActivity extends AppCompatActivity {
     private Machine machine;
     private String currentStatus = "Running";
     private File photoFile;
-    private static final String BASE_URL = "http://10.0.2.2/millx_api/"; // Or your actual base URL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +128,7 @@ public class EditMachineDetailsActivity extends AppCompatActivity {
         currentStatus = machine.getMachineStatus();
         if (machine.getImage() != null && !machine.getImage().isEmpty()) {
             Glide.with(this)
-                    .load(BASE_URL + machine.getImage())
+                    .load(ApiClient.BASE_URL + machine.getImage())
                     .placeholder(R.drawable.ic_idly_machine) // Ensure this exists or use a default
                     .error(R.drawable.ic_idly_machine)
                     .into(machineImgPreview);
