@@ -11,120 +11,174 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    // ================= AUTH (JSON – FIXED) =================
-    // PHP uses json_decode(file_get_contents("php://input"))
+        // ================= AUTH (JSON – FIXED) =================
+        // PHP uses json_decode(file_get_contents("php://input"))
 
-    @POST("auth/login.php")
-    Call<LoginResponse> login(@Body LoginRequest request);
+        @POST("auth/login.php")
+        Call<LoginResponse> login(@Body LoginRequest request);
 
-    @POST("auth/signup.php")
-    Call<ApiResponse> signup(@Body SignupRequest request);
+        @POST("auth/signup.php")
+        Call<ApiResponse> signup(@Body SignupRequest request);
 
-    @POST("auth/logout.php")
-    Call<ResponseBody> logout();
+        @POST("auth/logout.php")
+        Call<ResponseBody> logout();
 
-    // ================= USER (FORM / QUERY) =================
+        @POST("auth/verify_signup_otp.php")
+        Call<ResponseBody> verifySignupOtp(@Body java.util.HashMap<String, String> body);
 
-    @GET("user/home.php")
-    Call<ResponseBody> getUserHome();
+        @POST("auth/forgot_password.php")
+        Call<ResponseBody> forgotPassword(@Body java.util.HashMap<String, String> body);
 
-    @GET("user/products_list.php")
-    Call<ResponseBody> getProducts();
+        @POST("auth/verify_otp.php")
+        Call<ResponseBody> verifyOtp(@Body java.util.HashMap<String, String> body);
 
-    @FormUrlEncoded
-    @POST("user/order_create.php")
-    Call<ResponseBody> createOrder(
-            @Field("user_id") int userId,
-            @Field("product_id") int productId,
-            @Field("quantity") int quantity,
-            @Field("total_price") double totalPrice
-    );
+        @POST("auth/reset_password.php")
+        Call<ResponseBody> resetPassword(@Body java.util.HashMap<String, String> body);
 
-    @GET("user/order_status.php")
-    Call<ResponseBody> getOrderStatus(
-            @Query("user_id") int userId
-    );
+        // ================= USER (FORM / QUERY) =================
 
-    @GET("user/prices.php")
-    Call<ResponseBody> getPrices();
+        @GET("user/home.php")
+        Call<ResponseBody> getUserHome();
 
-    @FormUrlEncoded
-    @POST("user/feedback_submit.php")
-    Call<ResponseBody> submitFeedback(
-            @Field("user_id") int userId,
-            @Field("message") String message
-    );
+        @GET("user/products_list.php")
+        Call<ResponseBody> getProducts();
 
-    @GET("user/profile_get.php")
-    Call<ResponseBody> getUserProfile(
-            @Query("user_id") int userId
-    );
+        @POST("user/order_create.php")
+        Call<okhttp3.ResponseBody> createOrder(@retrofit2.http.Body OrderRequest request);
 
-    @FormUrlEncoded
-    @POST("user/profile_update.php")
-    Call<ResponseBody> updateUserProfile(
-            @Field("user_id") int userId,
-            @Field("name") String name,
-            @Field("phone") String phone
-    );
+        @GET("user/order_status.php")
+        Call<OrderResponse> getOrderStatus();
 
-    @GET("user/machine_list.php")
-    Call<ResponseBody> getUserMachines();
+        @POST("user/order_cancel.php")
+        Call<okhttp3.ResponseBody> cancelOrder(@retrofit2.http.Body java.util.Map<String, Integer> body);
 
-    @GET("user/stock_list.php")
-    Call<ResponseBody> getUserStocks();
+        @GET("user/prices.php")
+        Call<java.util.List<Product>> getPrices();
 
-    // ================= ADMIN =================
+        @FormUrlEncoded
+        @POST("user/feedback_submit.php")
+        Call<ResponseBody> submitFeedback(
+                        @Field("user_id") int userId,
+                        @Field("message") String message);
 
-    @GET("admin/dashboard.php")
-    Call<ResponseBody> getAdminDashboard();
+        @GET("user/profile_get.php")
+        Call<ProfileResponse> getUserProfile(
+                        @Query("user_id") int userId);
 
-    @GET("admin/machines_list.php")
-    Call<ResponseBody> getAdminMachines();
+        @retrofit2.http.Multipart
+        @POST("user/profile_update.php")
+        Call<ProfileResponse> updateUserProfile(
+                        @retrofit2.http.Part("user_id") okhttp3.RequestBody userId,
+                        @retrofit2.http.Part("name") okhttp3.RequestBody name,
+                        @retrofit2.http.Part("phone") okhttp3.RequestBody phone,
+                        @retrofit2.http.Part("address") okhttp3.RequestBody address,
+                        @retrofit2.http.Part okhttp3.MultipartBody.Part image);
 
-    @FormUrlEncoded
-    @POST("admin/machine_add.php")
-    Call<ResponseBody> addMachine(
-            @Field("name") String name,
-            @Field("status") String status
-    );
+        @GET("user/machine_list.php")
+        Call<java.util.List<Machine>> getUserMachines();
 
-    @FormUrlEncoded
-    @POST("admin/machine_status_update.php")
-    Call<ResponseBody> updateMachineStatus(
-            @Field("id") int id,
-            @Field("status") String status
-    );
+        @GET("user/stock_list.php")
+        Call<java.util.List<Stock>> getUserStocks();
 
-    @GET("admin/orders_list.php")
-    Call<ResponseBody> getAdminOrders();
+        // ================= ADMIN =================
 
-    @GET("admin/stock_list.php")
-    Call<ResponseBody> getAdminStocks();
+        @GET("admin/dashboard.php")
+        Call<DashboardResponse> getAdminDashboard();
 
-    @FormUrlEncoded
-    @POST("admin/stock_add.php")
-    Call<ResponseBody> addStock(
-            @Field("item_name") String itemName,
-            @Field("quantity") int quantity
-    );
+        @GET("admin/machines_list.php")
+        Call<java.util.List<Machine>> getAdminMachines();
 
-    @GET("admin/price_list.php")
-    Call<ResponseBody> getAdminPrices();
+        @retrofit2.http.Multipart
+        @POST("admin/machine_add.php")
+        Call<ResponseBody> addMachine(
+                        @retrofit2.http.Part("name") okhttp3.RequestBody name,
+                        @retrofit2.http.Part("status") okhttp3.RequestBody status,
+                        @retrofit2.http.Part("min") okhttp3.RequestBody min,
+                        @retrofit2.http.Part("max") okhttp3.RequestBody max,
+                        @retrofit2.http.Part("unit") okhttp3.RequestBody unit,
+                        @retrofit2.http.Part("description") okhttp3.RequestBody description,
+                        @retrofit2.http.Part okhttp3.MultipartBody.Part image);
 
-    @GET("admin/feedback_list.php")
-    Call<ResponseBody> getAdminFeedbacks();
+        @POST("admin/machine_status_update.php")
+        Call<ResponseBody> updateMachineStatus(@Body MachineRequest request);
 
-    // ================= NOTIFICATIONS =================
+        @retrofit2.http.Multipart
+        @POST("admin/machine_update.php")
+        Call<ResponseBody> updateMachineDetails(
+                        @retrofit2.http.Part("id") okhttp3.RequestBody id,
+                        @retrofit2.http.Part("name") okhttp3.RequestBody name,
+                        @retrofit2.http.Part("status") okhttp3.RequestBody status,
+                        @retrofit2.http.Part("min") okhttp3.RequestBody min,
+                        @retrofit2.http.Part("max") okhttp3.RequestBody max,
+                        @retrofit2.http.Part("unit") okhttp3.RequestBody unit,
+                        @retrofit2.http.Part("description") okhttp3.RequestBody description,
+                        @retrofit2.http.Part okhttp3.MultipartBody.Part image);
 
-    @GET("notifications/list.php")
-    Call<ResponseBody> getNotifications(
-            @Query("user_id") int userId
-    );
+        @POST("admin/machine_delete.php")
+        Call<ResponseBody> deleteMachine(@Body MachineRequest request);
 
-    @FormUrlEncoded
-    @POST("notifications/mark_read.php")
-    Call<ResponseBody> markNotificationRead(
-            @Field("id") int notificationId
-    );
+        @GET("admin/orders_list.php")
+        Call<AdminOrderResponse> getAdminOrders();
+
+        @GET("admin/stock_list.php")
+        Call<java.util.List<Stock>> getAdminStocks();
+
+        @retrofit2.http.Multipart
+        @POST("admin/stock_add.php")
+        Call<ResponseBody> addStock(
+                        @retrofit2.http.Part("product_name") okhttp3.RequestBody name,
+                        @retrofit2.http.Part("product_quantity") okhttp3.RequestBody quantity,
+                        @retrofit2.http.Part("unit") okhttp3.RequestBody unit,
+                        @retrofit2.http.Part okhttp3.MultipartBody.Part image);
+
+        @retrofit2.http.Multipart
+        @POST("admin/stock_update.php")
+        Call<ResponseBody> updateStock(
+                        @retrofit2.http.Part("product_id") okhttp3.RequestBody id,
+                        @retrofit2.http.Part("product_name") okhttp3.RequestBody name,
+                        @retrofit2.http.Part("product_quantity") okhttp3.RequestBody quantity,
+                        @retrofit2.http.Part("unit") okhttp3.RequestBody unit,
+                        @retrofit2.http.Part okhttp3.MultipartBody.Part image);
+
+        @POST("admin/stock_delete.php")
+        Call<ResponseBody> deleteStock(@Body StockRequest request);
+
+        @GET("admin/price_list.php")
+        Call<java.util.List<Product>> getAdminPrices();
+
+        @retrofit2.http.Multipart
+        @POST("admin/price_add.php")
+        Call<ResponseBody> addProduct(
+                        @retrofit2.http.Part("name") okhttp3.RequestBody name,
+                        @retrofit2.http.Part("price") okhttp3.RequestBody price,
+                        @retrofit2.http.Part("unit") okhttp3.RequestBody unit,
+                        @retrofit2.http.Part("description") okhttp3.RequestBody description,
+                        @retrofit2.http.Part okhttp3.MultipartBody.Part image);
+
+        @retrofit2.http.Multipart
+        @POST("admin/price_update.php")
+        Call<ResponseBody> updateProduct(
+                        @retrofit2.http.Part("id") okhttp3.RequestBody id,
+                        @retrofit2.http.Part("name") okhttp3.RequestBody name,
+                        @retrofit2.http.Part("price") okhttp3.RequestBody price,
+                        @retrofit2.http.Part("unit") okhttp3.RequestBody unit,
+                        @retrofit2.http.Part("description") okhttp3.RequestBody description,
+                        @retrofit2.http.Part okhttp3.MultipartBody.Part image);
+
+        @POST("admin/price_delete.php")
+        Call<ResponseBody> deleteProduct(@Body ProductRequest request);
+
+        @GET("admin/feedback_list.php")
+        Call<ResponseBody> getAdminFeedbacks();
+
+        // ================= NOTIFICATIONS =================
+
+        @GET("notifications/list.php")
+        Call<ResponseBody> getNotifications(
+                        @Query("user_id") int userId);
+
+        @FormUrlEncoded
+        @POST("notifications/mark_read.php")
+        Call<ResponseBody> markNotificationRead(
+                        @Field("id") int notificationId);
 }

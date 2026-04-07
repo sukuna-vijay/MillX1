@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.example.millx"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -43,10 +43,20 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.androidx.swiperefreshlayout)
     
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    
+    // Glide
+    implementation(libs.glide)
+
+    // CameraX
+    implementation(libs.camerax.core)
+    implementation(libs.camerax.camera2)
+    implementation(libs.camerax.lifecycle)
+    implementation(libs.camerax.view)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

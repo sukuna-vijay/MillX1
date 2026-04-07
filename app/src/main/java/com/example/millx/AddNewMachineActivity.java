@@ -34,6 +34,11 @@ public class AddNewMachineActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<String[]> permissionLauncher;
 
+    private android.widget.EditText editName, editId, editCapacity;
+    private android.widget.TextView editUnit;
+    private String currentStatus = "active";
+    private Bitmap selectedBitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +48,12 @@ public class AddNewMachineActivity extends AppCompatActivity {
         uploadPlaceholder = findViewById(R.id.upload_placeholder);
         tvCurrentStatus = findViewById(R.id.tv_current_status);
         statusDot = findViewById(R.id.status_dot);
-        
+
+        editName = findViewById(R.id.edit_name);
+        editId = findViewById(R.id.edit_id); // This might be Description or internal ID in future, treating as free
+        editCapacity = findViewById(R.id.edit_capacity);
+        editUnit = findViewById(R.id.txt_unit);
+
         MaterialCardView btnUpload = findViewById(R.id.btn_upload_image);
         View btnStatusDropdown = findViewById(R.id.btn_status_dropdown);
         ImageView btnBack = findViewById(R.id.btn_back);
@@ -64,22 +74,112 @@ public class AddNewMachineActivity extends AppCompatActivity {
         }
 
         if (btnAddMachine != null) {
-            btnAddMachine.setOnClickListener(v -> {
-                Toast.makeText(this, "New machine added successfully", Toast.LENGTH_SHORT).show();
-                finish();
-            });
+            btnAddMachine.setOnClickListener(v -> addMachine());
+        }
+    }
+
+    private void addMachine() {
+        String name = editName.getText().toString().trim();
+        String capacityStr = editCapacity.getText().toString().trim();
+        String description = editId.getText().toString().trim();
+
+        if (name.isEmpty()) {
+            Toast.makeText(this, "Machine Name is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String min = "0";
+        String max = "0";
+        if (capacityStr.contains("-")) {
+            String[] parts = capacityStr.split("-");
+            if (parts.length > 0)
+                min = parts[0].trim();
+            if (parts.length > 1)
+                max = parts[1].trim();
+        } else {
+            max = capacityStr;
+        }
+
+        String unit = "KG/HR";
+        if (editUnit != null)
+            unit = editUnit.getText().toString();
+
+        // Prepare Multipart Parts
+        okhttp3.RequestBody namePart = createPartFromString(name);
+        okhttp3.RequestBody statusPart = createPartFromString(currentStatus);
+        okhttp3.RequestBody minPart = createPartFromString(min);
+        okhttp3.RequestBody maxPart = createPartFromString(max);
+        okhttp3.RequestBody unitPart = createPartFromString(unit);
+        okhttp3.RequestBody descPart = createPartFromString(description);
+
+        okhttp3.MultipartBody.Part imagePart = null;
+        if (selectedBitmap != null) {
+            imagePart = prepareFilePart("image", selectedBitmap);
+        }
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.addMachine(namePart, statusPart, minPart, maxPart, unitPart, descPart, imagePart)
+                .enqueue(new retrofit2.Callback<okhttp3.ResponseBody>() {
+                    @Override
+                    public void onResponse(retrofit2.Call<okhttp3.ResponseBody> call,
+                            retrofit2.Response<okhttp3.ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            try {
+                                String resp = response.body().string(); // Read simple success message
+                                Toast.makeText(AddNewMachineActivity.this, "Machine added: " + resp, Toast.LENGTH_LONG)
+                                        .show();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            finish();
+                        } else {
+                            Toast.makeText(AddNewMachineActivity.this, "Failed: " + response.code(), Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(retrofit2.Call<okhttp3.ResponseBody> call, Throwable t) {
+                        Toast.makeText(AddNewMachineActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
+    }
+
+    @androidx.annotation.NonNull
+    private okhttp3.RequestBody createPartFromString(String descriptionString) {
+        return okhttp3.RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
+    }
+
+    private okhttp3.MultipartBody.Part prepareFilePart(String partName, Bitmap bitmap) {
+        try {
+            java.io.File filesDir = getApplicationContext().getFilesDir();
+            java.io.File file = new java.io.File(filesDir, "machine_image.jpg");
+
+            java.io.OutputStream os = new java.io.FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, os);
+            os.flush();
+            os.close();
+
+            okhttp3.RequestBody requestFile = okhttp3.RequestBody.create(okhttp3.MediaType.parse("image/jpeg"), file);
+            return okhttp3.MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
     private void showStatusSelectionDialog() {
-        String[] options = {"Available", "Not Available"};
+        String[] options = { "Available", "Not Available" };
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Machine Status");
         builder.setItems(options, (dialog, which) -> {
             if (which == 0) {
+                currentStatus = "Running";
                 tvCurrentStatus.setText("Available");
                 statusDot.setBackgroundResource(R.drawable.circle_green);
             } else {
+                currentStatus = "Stopped";
                 tvCurrentStatus.setText("Not Available");
                 statusDot.setBackgroundResource(R.drawable.circle_red);
             }
@@ -96,8 +196,7 @@ public class AddNewMachineActivity extends AppCompatActivity {
                         Bitmap imageBitmap = (Bitmap) extras.get("data");
                         showImage(imageBitmap);
                     }
-                }
-        );
+                });
 
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -105,14 +204,14 @@ public class AddNewMachineActivity extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Uri selectedImageUri = result.getData().getData();
                         try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
+                                    selectedImageUri);
                             showImage(bitmap);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-                }
-        );
+                });
 
         permissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestMultiplePermissions(),
@@ -129,8 +228,7 @@ public class AddNewMachineActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(this, "Permissions required to upload machine photo", Toast.LENGTH_SHORT).show();
                     }
-                }
-        );
+                });
     }
 
     private void showImage(Bitmap bitmap) {
@@ -140,7 +238,7 @@ public class AddNewMachineActivity extends AppCompatActivity {
     }
 
     private void showImageSourceDialog() {
-        String[] options = {"Camera", "Gallery"};
+        String[] options = { "Camera", "Gallery" };
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Machine Image");
         builder.setItems(options, (dialog, which) -> {
@@ -155,7 +253,7 @@ public class AddNewMachineActivity extends AppCompatActivity {
 
     private void checkCameraPermissionAndOpen() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            permissionLauncher.launch(new String[]{Manifest.permission.CAMERA});
+            permissionLauncher.launch(new String[] { Manifest.permission.CAMERA });
         } else {
             openCamera();
         }

@@ -150,7 +150,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Price per kg (₹)"
+                        android:text="Price per bag (₹)"
                         android:textColor="#4A5568"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -182,48 +182,32 @@
                     </RelativeLayout>
                 </LinearLayout>
 
-                <!-- Stock Field -->
+                <!-- Net Weight Field -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
                     android:orientation="vertical">
-                    
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Stock Quantity"
+                        android:text="Net Weight"
                         android:textColor="#4A5568"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <RelativeLayout
+                    <EditText
+                        android:id="@+id/edit_unit"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/input_field_bg"
-                        android:paddingHorizontal="16dp">
-                        <EditText
-                            android:id="@+id/edit_stock"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_toStartOf="@id/txt_kg"
-                            android:background="@null"
-                            android:hint="0"
-                            android:inputType="number"
-                            android:textColor="#1A1C1E"
-                            android:textSize="16sp" />
-                        <TextView
-                            android:id="@+id/txt_kg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:text="kg"
-                            android:textColor="#A0AEC0"
-                            android:textSize="14sp" />
-                    </RelativeLayout>
+                        android:hint="e.g. 50kg"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="#1A1C1E"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 

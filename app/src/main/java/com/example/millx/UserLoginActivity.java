@@ -27,7 +27,7 @@ public class UserLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_login);
 
         sessionManager = new SessionManager(this);
-        
+
         // Bind views
         etEmail = findViewById(R.id.edit_email);
         etPassword = findViewById(R.id.edit_password);
@@ -66,39 +66,47 @@ public class UserLoginActivity extends AppCompatActivity {
         }
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        LoginRequest request = new LoginRequest(email, password);
+        // ✅ Pass "user" as the role to match the updated LoginRequest constructor
+        LoginRequest request = new LoginRequest(email, password, "user");
 
         apiService.login(request).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
-                    
+
                     if ("success".equals(loginResponse.getStatus())) {
                         LoginResponse.UserData userData = loginResponse.getData();
-                        
+
                         // Save session
                         sessionManager.setLogin(true, "user");
-                        
+
                         String welcomeMsg = "Welcome";
                         if (userData != null && userData.getName() != null) {
                             welcomeMsg += " " + userData.getName();
                             // If you want to save specific user data
-                            sessionManager.createLoginSession(userData.getId(), userData.getName(), "user");
+                            sessionManager.createLoginSession(
+                                    userData.getId(),
+                                    userData.getName(),
+                                    "user",
+                                    userData.getPhone() != null ? userData.getPhone() : "",
+                                    userData.getProfileImage() != null ? userData.getProfileImage() : "",
+                                    loginResponse.getToken());
                         }
-                        
+
                         Toast.makeText(UserLoginActivity.this, welcomeMsg, Toast.LENGTH_SHORT).show();
-                        
+
                         Intent intent = new Intent(UserLoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(UserLoginActivity.this, 
-                            loginResponse.getMessage() != null ? loginResponse.getMessage() : "Login failed", 
-                            Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserLoginActivity.this,
+                                loginResponse.getMessage() != null ? loginResponse.getMessage() : "Login failed",
+                                Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(UserLoginActivity.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserLoginActivity.this, "Server error: " + response.code(), Toast.LENGTH_SHORT)
+                            .show();
                 }
             }
 

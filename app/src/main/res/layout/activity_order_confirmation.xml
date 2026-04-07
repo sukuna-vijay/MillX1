@@ -82,54 +82,20 @@
                     android:layout_marginTop="16dp"
                     android:background="#E0E2E6" />
 
-                <!-- Items -->
-                <RelativeLayout
+                <!-- Items Container -->
+                <LinearLayout
+                    android:id="@+id/item_list_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Karuka Bran"
-                        android:textColor="#1A1C1E"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="x 1"
-                        android:textColor="#74777F"
-                        android:textSize="15sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Thevanam"
-                        android:textColor="#1A1C1E"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="x 2"
-                        android:textColor="#74777F"
-                        android:textSize="15sp" />
-                </RelativeLayout>
-
+                    android:orientation="vertical" />
+ 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="16dp"
                     android:background="#E0E2E6" />
-
-                <!-- Total -->
+ 
+                <!-- Total Items Row -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -142,10 +108,11 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
                     <TextView
+                        android:id="@+id/tv_total_items_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="3"
+                        android:text="0"
                         android:textColor="#4F7E1C"
                         android:textSize="18sp"
                         android:textStyle="bold" />

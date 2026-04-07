@@ -15,6 +15,7 @@
     </queries>
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -133,6 +134,14 @@
             android:exported="false" />
 
         <activity
+            android:name=".QualityReportActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".QualityResultActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".AdminMachineManagementActivity"
             android:exported="false" />
 
@@ -170,6 +179,10 @@
 
         <activity
             android:name=".AddStockItemActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".EditOrderProductActivity"
             android:exported="false" />
             
     </application>

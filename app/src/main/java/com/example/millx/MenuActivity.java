@@ -38,15 +38,51 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        setupLaunchers();
+        updateUI();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    private void updateUI() {
         profileImg = findViewById(R.id.img_profile);
+        android.widget.TextView tvName = findViewById(R.id.tv_menu_name);
+        android.widget.TextView tvPhone = findViewById(R.id.tv_menu_phone);
+
+        SessionManager sessionManager = new SessionManager(this);
+        String name = sessionManager.getUserName();
+        String phone = sessionManager.getUserPhone();
+        String image = sessionManager.getUserImage();
+
+        if (tvName != null)
+            tvName.setText(name);
+        if (tvPhone != null)
+            tvPhone.setText(phone.isEmpty() ? "No Number" : phone);
+
+        if (profileImg != null) {
+            if (!image.isEmpty()) {
+                String imageUrl = ApiClient.BASE_URL + image;
+                com.bumptech.glide.Glide.with(this)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.ic_user_profile)
+                        .error(R.drawable.ic_user_profile)
+                        .into(profileImg);
+            } else {
+                profileImg.setImageResource(R.drawable.ic_user_profile);
+            }
+        }
+
         MaterialCardView btnChangePic = findViewById(R.id.btn_change_profile_pic);
         MaterialCardView menuHome = findViewById(R.id.menu_home);
         MaterialCardView menuProfile = findViewById(R.id.menu_profile);
         MaterialCardView menuFeedback = findViewById(R.id.menu_feedback);
         MaterialCardView menuLogout = findViewById(R.id.btn_logout);
 
-        setupLaunchers();
+        // setupLaunchers(); // REMOVED from here
 
         if (btnChangePic != null) {
             btnChangePic.setOnClickListener(v -> showImageSourceDialog());
@@ -91,8 +127,7 @@ public class MenuActivity extends AppCompatActivity {
                         Bitmap imageBitmap = (Bitmap) extras.get("data");
                         profileImg.setImageBitmap(imageBitmap);
                     }
-                }
-        );
+                });
 
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -100,14 +135,14 @@ public class MenuActivity extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Uri selectedImageUri = result.getData().getData();
                         try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
+                                    selectedImageUri);
                             profileImg.setImageBitmap(bitmap);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-                }
-        );
+                });
 
         permissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestMultiplePermissions(),
@@ -122,14 +157,14 @@ public class MenuActivity extends AppCompatActivity {
                     if (allGranted) {
                         showImageSourceDialog();
                     } else {
-                        Toast.makeText(this, "Permissions required to change profile picture", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Permissions required to change profile picture", Toast.LENGTH_SHORT)
+                                .show();
                     }
-                }
-        );
+                });
     }
 
     private void showImageSourceDialog() {
-        String[] options = {"Camera", "Gallery"};
+        String[] options = { "Camera", "Gallery" };
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Image Source");
         builder.setItems(options, (dialog, which) -> {
@@ -144,7 +179,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private void checkCameraPermissionAndOpen() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            permissionLauncher.launch(new String[]{Manifest.permission.CAMERA});
+            permissionLauncher.launch(new String[] { Manifest.permission.CAMERA });
         } else {
             openCamera();
         }
@@ -173,8 +208,10 @@ public class MenuActivity extends AppCompatActivity {
         MaterialButton btnLater = dialog.findViewById(R.id.btn_later);
         MaterialButton btnSubmit = dialog.findViewById(R.id.btn_submit);
 
-        if (btnClose != null) btnClose.setOnClickListener(v -> dialog.dismiss());
-        if (btnLater != null) btnLater.setOnClickListener(v -> dialog.dismiss());
+        if (btnClose != null)
+            btnClose.setOnClickListener(v -> dialog.dismiss());
+        if (btnLater != null)
+            btnLater.setOnClickListener(v -> dialog.dismiss());
         if (btnSubmit != null) {
             btnSubmit.setOnClickListener(v -> {
                 Toast.makeText(this, "Feedback submitted. Thank you!", Toast.LENGTH_SHORT).show();

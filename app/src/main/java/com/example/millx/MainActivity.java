@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
@@ -21,6 +22,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SessionManager sessionManager = new SessionManager(this);
+        String userName = sessionManager.getUserName();
+        android.widget.TextView tvWelcome = findViewById(R.id.tv_welcome_name);
+        if (tvWelcome != null) {
+            tvWelcome.setText("Welcome " + userName);
+        }
+
+        SwipeRefreshLayout swipeRefresh = findViewById(R.id.swipe_refresh);
+        if (swipeRefresh != null) {
+            swipeRefresh.setOnRefreshListener(() -> {
+                // Refresh logic (e.g., re-check session or reload status)
+                if (tvWelcome != null) {
+                    tvWelcome.setText("Welcome " + sessionManager.getUserName());
+                }
+                // Simulate network delay
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    swipeRefresh.setRefreshing(false);
+                }, 1000);
+            });
+        }
 
         ImageView btnNotification = findViewById(R.id.btn_notification);
         if (btnNotification != null) {

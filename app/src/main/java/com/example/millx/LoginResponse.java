@@ -1,9 +1,14 @@
 package com.example.millx;
 
+import com.google.gson.annotations.SerializedName;
+
 public class LoginResponse {
 
     private String status;
     private String message;
+    private String token;
+
+    @SerializedName("user")
     private UserData data;
 
     // getters
@@ -13,6 +18,10 @@ public class LoginResponse {
 
     public String getMessage() {
         return message;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     public UserData getData() {
@@ -25,6 +34,12 @@ public class LoginResponse {
         private String name;
         private String role;
 
+        @SerializedName("phone")
+        private String phone;
+
+        @SerializedName("profile_image")
+        private String profileImage;
+
         public int getId() {
             return id;
         }
@@ -35,6 +50,14 @@ public class LoginResponse {
 
         public String getRole() {
             return role;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public String getProfileImage() {
+            return profileImage;
         }
     }
 }

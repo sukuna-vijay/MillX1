@@ -3,32 +3,26 @@ package com.example.millx;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 
-import java.io.IOException;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AdminMenuActivity extends AppCompatActivity {
 
     private ShapeableImageView profileImg;
-    private ActivityResultLauncher<Intent> cameraLauncher;
-    private ActivityResultLauncher<Intent> galleryLauncher;
-    private ActivityResultLauncher<String[]> permissionLauncher;
+    private TextView tvActive, tvInactive;
+    private SwipeRefreshLayout swipeRefresh;
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +31,21 @@ public class AdminMenuActivity extends AppCompatActivity {
 
         profileImg = findViewById(R.id.profile_image);
         MaterialCardView btnChangePic = findViewById(R.id.btn_change_profile_pic);
-        
-        setupLaunchers();
+        swipeRefresh = findViewById(R.id.swipe_refresh);
+
+        apiService = ApiClient.getClient().create(ApiService.class);
+
+        if (swipeRefresh != null) {
+            swipeRefresh.setOnRefreshListener(this::fetchDashboardData);
+        }
+
+        updateUI(); // Initial load
 
         if (btnChangePic != null) {
-            btnChangePic.setOnClickListener(v -> showImageSourceDialog());
+            btnChangePic.setOnClickListener(v -> {
+                Intent intent = new Intent(AdminMenuActivity.this, AdminProfileActivity.class);
+                startActivity(intent);
+            });
         }
 
         MaterialCardView menuHome = findViewById(R.id.menu_home);
@@ -92,10 +96,7 @@ public class AdminMenuActivity extends AppCompatActivity {
         MaterialCardView menuLogout = findViewById(R.id.menu_logout);
         if (menuLogout != null) {
             menuLogout.setOnClickListener(v -> {
-                SharedPreferences sharedPreferences = getSharedPreferences("MillXPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
+                new SessionManager(AdminMenuActivity.this).logoutUser();
 
                 Intent intent = new Intent(AdminMenuActivity.this, RoleSelectionActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -105,86 +106,62 @@ public class AdminMenuActivity extends AppCompatActivity {
         }
     }
 
-    private void setupLaunchers() {
-        // Camera Result
-        cameraLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Bundle extras = result.getData().getExtras();
-                        Bitmap imageBitmap = (Bitmap) extras.get("data");
-                        profileImg.setImageBitmap(imageBitmap);
-                    }
-                }
-        );
-
-        // Gallery Result
-        galleryLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri selectedImageUri = result.getData().getData();
-                        try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                            profileImg.setImageBitmap(bitmap);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-        );
-
-        // Permission Result
-        permissionLauncher = registerForActivityResult(
-                new ActivityResultContracts.RequestMultiplePermissions(),
-                result -> {
-                    boolean allGranted = true;
-                    for (Boolean granted : result.values()) {
-                        if (!granted) {
-                            allGranted = false;
-                            break;
-                        }
-                    }
-                    if (allGranted) {
-                        showImageSourceDialog();
-                    } else {
-                        Toast.makeText(this, "Permissions are required to change profile picture", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
     }
 
-    private void showImageSourceDialog() {
-        String[] options = {"Camera", "Gallery"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Image Source");
-        builder.setItems(options, (dialog, which) -> {
-            if (which == 0) {
-                checkCameraPermissionAndOpen();
-            } else {
-                openGallery();
+    private void updateUI() {
+        SessionManager session = new SessionManager(this);
+        String name = session.getUserName();
+        String phone = session.getUserPhone();
+        String image = session.getUserImage();
+
+        TextView tvName = findViewById(R.id.tv_admin_menu_name);
+        TextView tvPhone = findViewById(R.id.tv_admin_menu_phone);
+
+        if (tvName != null)
+            tvName.setText(name);
+        if (tvPhone != null)
+            tvPhone.setText(phone);
+
+        if (profileImg != null && image != null && !image.isEmpty()) {
+            com.bumptech.glide.Glide.with(this)
+                    .load(image)
+                    .placeholder(R.drawable.ic_admin_profile)
+                    .error(R.drawable.ic_admin_profile)
+                    .into(profileImg);
+        }
+
+        fetchDashboardData();
+    }
+
+    private void fetchDashboardData() {
+        tvActive = findViewById(R.id.tv_active_machines);
+        tvInactive = findViewById(R.id.tv_inactive_machines);
+
+        apiService.getAdminDashboard().enqueue(new Callback<DashboardResponse>() {
+            @Override
+            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+                if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
+                if (response.isSuccessful() && response.body() != null
+                        && "success".equals(response.body().getStatus())) {
+                    DashboardResponse.DashboardData data = response.body().getData();
+                    if (data != null) {
+                        if (tvActive != null)
+                            tvActive.setText(String.valueOf(data.getActiveMachines()));
+                        if (tvInactive != null)
+                            tvInactive.setText(String.valueOf(data.getInactiveMachines()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+                if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
+                Toast.makeText(AdminMenuActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        builder.show();
-    }
-
-    private void checkCameraPermissionAndOpen() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            permissionLauncher.launch(new String[]{Manifest.permission.CAMERA});
-        } else {
-            openCamera();
-        }
-    }
-
-    private void openCamera() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            cameraLauncher.launch(takePictureIntent);
-        }
-    }
-
-    private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        galleryLauncher.launch(intent);
     }
 }

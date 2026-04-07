@@ -66,7 +66,13 @@ public class SignUpActivity extends AppCompatActivity {
                             response.body().message,
                             Toast.LENGTH_SHORT).show();
 
-                    finish(); // back to login
+                    android.content.Intent intent = new android.content.Intent(SignUpActivity.this, VerifyCodeActivity.class);
+                    // Pass the role user, but type is signup
+                    intent.putExtra("role", "user"); 
+                    intent.putExtra("email", email); 
+                    intent.putExtra("type", "signup"); 
+                    startActivity(intent);
+                    finish(); // close signup screen
 
                 } else {
                     Toast.makeText(SignUpActivity.this,

@@ -34,6 +34,16 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="4dp"
+            android:src="@android:drawable/ic_menu_delete"
+            app:tint="@color/white" />
     </RelativeLayout>
 
     <ScrollView
@@ -141,7 +151,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="12dp"
                             android:background="@null"
-                            android:text="Idly Batter Machine"
+                            android:hint="Enter machine name"
                             android:textColor="#1A1C1E"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -174,7 +184,108 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="12dp"
                             android:background="@null"
-                            android:text="MCH-1024-IB"
+                            android:hint="Enter machine ID"
+                            android:textColor="#1A1C1E"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="MIN CAPACITY"
+                        android:textColor="#A0AEC0"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/input_field_bg"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="16dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/ic_menu_recent_history"
+                            app:tint="#A0AEC0" />
+                        <EditText
+                            android:id="@+id/edit_min_capacity"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="12dp"
+                            android:background="@null"
+                            android:hint="Enter min capacity"
+                            android:inputType="number"
+                            android:textColor="#1A1C1E"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="MAX CAPACITY"
+                        android:textColor="#A0AEC0"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/input_field_bg"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="16dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/ic_menu_recent_history"
+                            app:tint="#A0AEC0" />
+                        <EditText
+                            android:id="@+id/edit_max_capacity"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="12dp"
+                            android:background="@null"
+                            android:hint="Enter max capacity"
+                            android:inputType="number"
+                            android:textColor="#1A1C1E"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="UNIT"
+                        android:textColor="#A0AEC0"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/input_field_bg"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="16dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/ic_menu_info_details"
+                            app:tint="#A0AEC0" />
+                        <EditText
+                            android:id="@+id/edit_unit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="12dp"
+                            android:background="@null"
+                            android:hint="e.g. KG/HR"
                             android:textColor="#1A1C1E"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -227,47 +338,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="PRODUCTION CAPACITY"
+                        android:text="DESCRIPTION"
                         android:textColor="#A0AEC0"
                         android:textSize="11sp"
                         android:textStyle="bold"
                         android:letterSpacing="0.05"/>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="56dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/input_field_bg"
-                        android:paddingHorizontal="16dp">
-                        <ImageView
-                            android:id="@+id/ic_cap"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_centerVertical="true"
-                            android:src="@android:drawable/ic_menu_recent_history"
-                            app:tint="#A0AEC0" />
+                        android:padding="16dp">
                         <EditText
-                            android:id="@+id/edit_capacity"
+                            android:id="@+id/edit_description"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="12dp"
-                            android:layout_toStartOf="@id/txt_unit"
-                            android:layout_toEndOf="@id/ic_cap"
+                            android:layout_height="wrap_content"
                             android:background="@null"
-                            android:text="5-10"
+                            android:hint="Enter machine description"
+                            android:minHeight="80dp"
+                            android:gravity="top"
                             android:textColor="#1A1C1E"
                             android:textSize="15sp" />
-                        <TextView
-                            android:id="@+id/txt_unit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:text="KG/HR"
-                            android:textColor="#A0AEC0"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

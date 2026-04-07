@@ -125,6 +125,12 @@ public class AdminMainActivity extends AppCompatActivity {
             });
         }
 
+        // Initialize Profile Image View
+        com.google.android.material.imageview.ShapeableImageView profileImg = findViewById(R.id.profile_placeholder);
+
+        // Fetch and load profile image
+        loadProfileImage(profileImg);
+
         // Handle back press using the modern API (replacing deprecated onBackPressed)
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
@@ -145,5 +151,31 @@ public class AdminMainActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        com.google.android.material.imageview.ShapeableImageView profileImg = findViewById(R.id.profile_placeholder);
+        loadProfileImage(profileImg);
+    }
+
+    private void loadProfileImage(com.google.android.material.imageview.ShapeableImageView profileImg) {
+        if (profileImg == null)
+            return;
+
+        SessionManager session = new SessionManager(this);
+        String image = session.getUserImage();
+
+        if (image != null && !image.isEmpty()) {
+            String imageUrl = ApiClient.BASE_URL + image;
+            com.bumptech.glide.Glide.with(this)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.ic_admin_profile)
+                    .error(R.drawable.ic_admin_profile)
+                    .into(profileImg);
+        } else {
+            profileImg.setImageResource(R.drawable.ic_admin_profile);
+        }
     }
 }
