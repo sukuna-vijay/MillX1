@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MillX</string>
+    <string-array name="quality_results">
+        <item>Select result</item>
+        <item>Excellent</item>
+        <item>Good</item>
+        <item>Average</item>
+        <item>Poor</item>
+    </string-array>
+</resources>
